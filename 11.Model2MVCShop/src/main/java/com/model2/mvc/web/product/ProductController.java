@@ -74,7 +74,7 @@ public class ProductController {
 
 		System.out.println("/product/getProduct : GET");
 		
-		/*/////////////////////// Cookie part ///////////////////////////////
+		/////////////////////// Cookie part ///////////////////////////////
 		String history = "";
 
 		Cookie[] cookies = request.getCookies();
@@ -100,7 +100,7 @@ public class ProductController {
 
 		response.addCookie(cookie);
 		
-		/////////////////////// Cookie part ////////////////////////////*/
+		/////////////////////// Cookie part ////////////////////////////
 		//Business Logic
 		Product product = productService.getProduct(prodNo);
 

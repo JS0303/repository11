@@ -17,11 +17,17 @@
 	<title>상품등록</title>
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+	<link rel="stylesheet" href="/css/admin.css" type="text/css">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
+	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+  
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
        body > div.container{
@@ -79,10 +85,7 @@
 				fncAddProduct();
 		});
 	});	
-	/*============= jQuery 변경 주석처리 =============
-	function resetData(){
-		document.detailForm.reset();
-	}========================================	*/
+		
 	//==> 추가된부분 : "취소"  Event 처리 및  연결
 		$(function(){
 	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
@@ -93,6 +96,24 @@
 				$("form")[0].reset();
 		});
 	});	
+	
+	//==> 추가된부분 : "취소"  Event 처리 및  연결
+		$(function(){
+	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
+			$( "button.btn.btn-default" ).on("click" , function() {
+				//Debug..
+				//alert(  $( "td.ct_btn01:contains('취소')" ).html() );
+				self.location="/product/listProduct?menu=manage";
+		});
+	});	
+	
+		$( function() {
+		    $( "#manuDate" ).datepicker();
+		    $( "#manuDate" ).on( "change", function() {
+		        $( "#manuDate" ).datepicker( "option", "dateFormat", "yy-mm-dd");
+		      });
+		  } );
 		
 	</script>
 	</head>
@@ -150,9 +171,8 @@
 		<div class="form-group">
 		    <label for="manuDate" class="col-sm-offset-1 col-sm-3 control-label">제조일자</label>
 		    <div class="col-sm-4">
-		      <input type="manuDate" class="form-control" id="manuDate" name="manuDate" placeholder="상품이 제조된 날짜">
-		      &nbsp;<img src="../images/ct_icon_date.gif" width="15" height="15" 
-											onclick="show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value)"/>
+		      <input type="text" class="form-control" id="manuDate" name="manuDate" placeholder="상품이 제조된 날짜">
+		      &nbsp;
 		    </div>
 		  </div>
 		  
@@ -176,7 +196,8 @@
 		<div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button type="button" class="btn btn-primary"  >등 &nbsp;록</button>
-			  <a class="btn btn-primary btn" href="#" role="button">취 &nbsp;소</a>
+			  <a class="btn btn-primary btn" href="#" role="button">다시입력하기</a>
+		      <button type="button" class="btn btn-default"  >상품목록으로</button>
 		    </div>
 		  </div>
 		</form>

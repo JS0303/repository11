@@ -66,7 +66,7 @@
 		//==> 검색 Event 연결처리부분
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함. 
-			 $( "td.ct_btn01:contains('검색')" ).on("click" , function() {
+			 $( "button.btn.btn-default" ).on("click" , function() {
 				//Debug..
 				//alert(  $( "td.ct_btn01:contains('검색')" ).html() );
 				fncGetList('1');
@@ -86,11 +86,22 @@
 					
 					
 					});
+			}else{
+				$( "td:nth-child(2)").on("click" , function() {
+					self.location ="/product/getProduct?prodNo="+$(this).find("input[name=prodNo]").val();
+				});
 			}
-					
-			$( "td:nth-child(7) > i ").on("click" , function() {
+	 
+	
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			
+	 $(function() {
+		 $( "td:nth-child(6) > i" ).css("color" , "red");
+		 //alert($( "td:nth-child(6) > i" ).val());
+			$( "td:nth-child(6) > i" ).on("click" , function() {
 
-					var prodNo = $(this).find("input[name=prodNo]").val().trim();
+					var prodNo = $(this).find("input[name=prodNo]").val();
 					
 					$.ajax( 
 							{
@@ -124,10 +135,6 @@
 					////////////////////////////////////////////////////////////////////////////////////////////	
 			
 				});
-			
-			
-			//==> currentPage LINK Event 연결처리
-			
 			//==> UI 수정 추가부분  :  userId LINK Event End User 에게 보일수 있도록 
 			$( ".ct_list_pop td:nth-child(3)" ).css("color" , "red");
 			$("h7").css("color" , "red");
@@ -136,8 +143,10 @@
 			//==> 아래와 같이 정의한 이유는 ??
 			//==> 아래의 주석을 하나씩 풀어 가며 이해하세요.					
 			$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
+
+	 });			
 			
-		});	
+});	
 
 </script>
 </head>
@@ -217,7 +226,7 @@
 				<c:forEach var="product" items="${list}">
 					<c:set var="i" value="${ i+1 }" />
 					<tr>
-						<td align="center">${i}</td>
+						<td align="center">${ i }</td>
 						<td align="left" title="Click : 상품정보 확인">
 							${product.prodName}
 							<input type="hidden" name="prodNo"	value="${product.prodNo}"> 
@@ -227,14 +236,14 @@
 						<td align="left">${product.regDate}</td>
 						<td align="left"></td>					
 						<td align="left">
-						<i class="glyphicon glyphicon-ok" id= "${product.prodNo}"></i>
-						<input type="hidden" value="${product.prodNo}">
+						<i class="glyphicon glyphicon-ok" id="${product.prodNo}">
+							<input type="hidden" name="prodNo" value="${product.prodNo}">
+						</i>
 						</td> 						
 					</tr>
-				
 				</c:forEach>
 				
-				</tbody>
+			</tbody>
       
       </table>
 	  <!--  table End /////////////////////////////////////-->
