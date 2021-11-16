@@ -147,7 +147,7 @@
 	 	 	<!--  Main start /////////////////////////////////////-->   		
 	 	 	<div class="col-md-9">
 				<div class="jumbotron">
-			  		<h1>Model2 MVC Shop</h1>
+			  		<h1>mini Shop</h1>
 			  		<p>로그인 후 사용가능...</p>
 			  		<p>로그인 전 검색만 가능합니다.</p>
 			  		<p>회원가입 하세요.</p>

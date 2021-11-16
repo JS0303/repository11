@@ -1,15 +1,22 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
+<%@ page contentType="text/html; charset=EUC-KR" isELIgnored="false"%>
 
-<%@ page import="com.model2.mvc.service.domain.Product" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<%@ page import="com.model2.mvc.service.domain.Purchase" %>
 <%@ page import="com.model2.mvc.common.*" %>
 
-<%-- /////////////////////// EL / JSTL 적용으로 주석 처리 ////////////////////////
-<%
-	Product product = (Product)request.getAttribute("product");
+<%-- <%
+	Purchase purchase = (Purchase)request.getAttribute("purchase");
 	
-		System.out.println("getProduct.jsp의 request.getParameter : "+request.getParameter("menu"));
-%>	
-/////////////////////// EL / JSTL 적용으로 주석 처리 //////////////////////// --%>
+		System.out.println("getPurchase.jsp의 request.getParameter : "+request.getParameter("menu"));
+		
+		String payment = "신용구매";
+		
+		System.out.println("_"+purchase.getDlvyDate()+"_");
+%> --%>	
+
 
 <!DOCTYPE html>
 
@@ -44,35 +51,29 @@
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	//=====기존Code 주석 처리 후  jQuery 변경 ======//
-	function fncGetProduct() {
+	function fncGetPurchase() {
 	}
 	//===========================================//
 	
 		//==> jQuery 적용 추가된 부분
 		 $(function() {
-		//==> 추가된부분 : "구매"  Event 연결
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
+		//=>수정
 			 $( "button.btn.btn-primary" ).on("click" , function() {
-				//Debug..
-				//alert(  $( "td.ct_btn01:contains('확인')" ).html() );
 				
-				 self.location="/purchase/addPurchase?prod_no=${product.prodNo}";
+				 self.location="/purchase/updatePurchaseView?prod_no=${product.prodNo}";
 			
 			});
 			
 	
-		//==> 추가된부분 : "이전"  Event 연결
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
+		//==>확인
 			 $( "a[href='#' ]" ).on("click" , function() {
-				//Debug..
-				//alert(  $( "td.ct_btn01:contains('이전')" ).html() );
-				 self.location = "/product/listProduct?menu=search";
+				
+				 self.location = "/purchase/listPurchase";
 				
 			});
 		});	
 	</script>
+	
 </head>
 
 <body>
@@ -81,7 +82,7 @@
 	<div class="container">
 	
 		<div class="page-header">
-	       <h3 class=" text-info">상품상세조회</h3>
+	       <h3 class=" text-info">구매상세조회</h3>
 	       
 	    </div>
 	
@@ -93,62 +94,82 @@
 		
 		<hr/>
 		
+		
 	<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>상품명</strong></div>
-			<div class="col-xs-8 col-md-4">${product.prodName}</div>
+	  		<div class="col-xs-4 col-md-2 "><strong>구매자아이디</strong></div>
+			<div class="col-xs-8 col-md-4">${purchase.buyer.userId}</div>
 		</div>
 		
 		<hr/>
 		
+		
 	<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>상품이미지</strong></div>
-			<div class="col-xs-8 col-md-4">${product.fileName}</div>
+	  		<div class="col-xs-4 col-md-2 "><strong>구매방법</strong></div>
+			<div class="col-xs-8 col-md-4">${fn:trim(purchase.paymentOption) eq '1' ? '현금구매' : '신용구매'}</div>
+		</div>
+		
+		<hr/>
+		
+	
+	<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>구매자이름</strong></div>
+			<div class="col-xs-8 col-md-4">${purchase.receiverName}</div>
 		</div>
 		
 		<hr/>
 	
-
 	<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>상품상세정보</strong></div>
-			<div class="col-xs-8 col-md-4">${product.prodDetail}</div>
-		</div>
-		
-		<hr/>
-		
-	<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>제조일자</strong></div>
-			<div class="col-xs-8 col-md-4">${product.manuDate}</div>
-		</div>
-		
-		<hr/>
-
-	<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>가격</strong></div>
-			<div class="col-xs-8 col-md-4">${product.price}</div>
+	  		<div class="col-xs-4 col-md-2 "><strong>구매자연락처</strong></div>
+			<div class="col-xs-8 col-md-4">${purchase.receiverPhone}</div>
 		</div>
 		
 		<hr/>
 		
 		
 	<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>등록일자</strong></div>
-			<div class="col-xs-8 col-md-4">${product.regDate}</div>
+	  		<div class="col-xs-4 col-md-2 "><strong>구매자주소</strong></div>
+			<div class="col-xs-8 col-md-4">${purchase.dlvyAddr}</div>
 		</div>
 		
 		<hr/>
-
-<div class="row">
+		
+		
+	<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>구매요청사항</strong></div>
+			<div class="col-xs-8 col-md-4">${purchase.dlvyRequest}</div>
+		</div>
+		
+		<hr/>
+		
+		
+	<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>배송희망일</strong></div>
+			<div class="col-xs-8 col-md-4">${purchase.dlvyDate}</div>
+		</div>
+		
+		<hr/>
+		
+		
+	<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>주문일</strong></div>
+			<div class="col-xs-8 col-md-4">${purchase.orderDate}</div>
+		</div>
+		
+		<hr/>
+	
+	
+	<div class="row">
 	  		<div class="col-md-12 text-center ">
-	  			<button type="button" class="btn btn-primary">구 &nbsp;매</button>
-	  			<a class="btn btn-primary btn" href="#" role="button">상품목록으로</a>
+	  			<button type="button" class="btn btn-primary">수 &nbsp;정</button>
+	  			<a class="btn btn-primary btn" href="#" role="button">구매목록으로</a>
 	  		</div>
 		</div>
 		
 		<br/>
 		
  	</div>
- 	<!--  화면구성 div Start /////////////////////////////////////-->
-
+	
+	
 
 </body>
 </html>

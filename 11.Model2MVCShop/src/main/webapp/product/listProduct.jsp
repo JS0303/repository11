@@ -227,14 +227,52 @@
 					<c:set var="i" value="${ i+1 }" />
 					<tr>
 						<td align="center">${ i }</td>
-						<td align="left" title="Click : 상품정보 확인">
+						<td align="left" title="Click : 상품정보 확인"><c:choose>
+								<c:when
+									test="${role eq 'user'}||${role == null} && ${product.prodTranCode != null}">
 							${product.prodName}
 							<input type="hidden" name="prodNo"	value="${product.prodNo}"> 
 							<input type="hidden" name="menu" value="${param.menu}">
-						</td>
+							<input type="hidden" name="regDate" value="${product.regDate}">
+							<input type="hidden" name="prodTranCode" value="${product.prodTranCode}">
+							</c:when>
+								<c:otherwise>
+									<a
+										href="/product/getProduct?prodNo=${product.prodNo}&menu=${param.menu}">${product.prodName}</a>
+								</c:otherwise>
+							</c:choose></td>
+							
+						
 						<td align="left">${product.price}</td>						
 						<td align="left">${product.regDate}</td>
-						<td align="left"></td>					
+						<c:choose>
+							<c:when test="${product.prodTranCode == null}">
+								<td align="left">판매중</td>
+							</c:when>
+							<c:otherwise>
+								<c:choose>
+									<c:when test="${product.prodTranCode eq '001'}">
+										<td align="left">구매완료 <c:choose>
+												<c:when test="${param.menu eq 'manage'}">
+													<a
+														href="updateTranCodeByProd?prodNo=${product.prodNo}&tranCode=002">배송하기</a>
+												</c:when>
+											</c:choose>
+										</td>
+									</c:when>
+
+									<c:when test="${product.prodTranCode eq '002'}">
+										<td align="left">배송중</td>
+									</c:when>
+									<c:when test="${product.prodTranCode eq '003'}">
+										<td align="left">배송완료</td>
+									</c:when>
+									<c:when test="${product.prodTranCode eq '004'}">
+										<td align="left">재고없음</td>
+									</c:when>
+								</c:choose>
+							</c:otherwise>
+						</c:choose>					
 						<td align="left">
 						<i class="glyphicon glyphicon-ok" id="${product.prodNo}">
 							<input type="hidden" name="prodNo" value="${product.prodNo}">

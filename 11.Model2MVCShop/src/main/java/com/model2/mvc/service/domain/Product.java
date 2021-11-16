@@ -13,7 +13,7 @@ public class Product {
 	private String prodName;
 	private int prodNo;
 	private Date regDate;
-	private String proTranCode;
+	private String prodTranCode;
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	// JSON ==> Domain Object  Binding을 위해 추가된 부분
 	private String regDateString;
@@ -23,12 +23,12 @@ public class Product {
 	}
 	
 	///Method
-	public String getProTranCode() {
-		return proTranCode;
+	public String getProdTranCode() {
+		return prodTranCode;
 	}
 
-	public void setProTranCode(String proTranCode) {
-		this.proTranCode = proTranCode;
+	public void setProdTranCode(String prodTranCode) {
+		this.prodTranCode = prodTranCode;
 	}
 
 	public String getFileName() {
